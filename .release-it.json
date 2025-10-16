@@ -1,9 +1,10 @@
 {
     "git": {
-        "commit": false,
-        "tag": false,
-        "push": false,
-        "requireCleanWorkingDir": false
+        "commitMessage": "chore: release v${version}",
+        "tagName": "v${version}",
+        "push": true,
+        "requireCleanWorkingDir": false,
+        "requireBranch": "main"
     },
     "npm": {
         "publish": true,
@@ -13,13 +14,23 @@
         ]
     },
     "github": {
-        "release": false
+        "release": true,
+        "releaseName": "v${version}",
+        "preRelease": "auto"
     },
     "hooks": {
         "before:init": [
             "npm run typescript"
         ],
-        "after:bump": "echo Successfully bumped version to ${version}"
+        "after:bump": "echo Successfully bumped version to ${version}",
+        "after:release": "echo Successfully released ${name} v${version} to npm and GitHub!"
     },
-    "plugins": {}
+    "plugins": {
+        "@release-it/conventional-changelog": {
+            "preset": {
+                "name": "conventionalcommits"
+            },
+            "infile": "CHANGELOG.md"
+        }
+    }
 }
