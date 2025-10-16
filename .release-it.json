@@ -1,0 +1,25 @@
+{
+    "git": {
+        "commit": false,
+        "tag": false,
+        "push": false,
+        "requireCleanWorkingDir": false
+    },
+    "npm": {
+        "publish": true,
+        "publishArgs": [
+            "--access",
+            "public"
+        ]
+    },
+    "github": {
+        "release": false
+    },
+    "hooks": {
+        "before:init": [
+            "npm run typescript"
+        ],
+        "after:bump": "echo Successfully bumped version to ${version}"
+    },
+    "plugins": {}
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": [
+    "nitrotorch"
+  ],
+  "ios": {
+    "iosModuleName": "NitroTorch"
+  },
+  "android": {
+    "androidNamespace": [
+      "nitrotorch"
+    ],
+    "androidCxxLibName": "NitroTorch"
+  },
+  "autolinking": {
+    "Torch": {
+      "swift": "HybridTorch",
+      "kotlin": "HybridTorch"
+    }
+  },
+  "ignorePaths": [
+    "**/node_modules"
+  ]
+}
