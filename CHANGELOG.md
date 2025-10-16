@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.1-alpha.5](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2025-10-16)
+
+### 🐛 Bug Fixes
+
+* release it changelog ([#3](https://github.com/irekrog/react-native-torch-nitro/issues/3)) by @ in 20650ba4ce4f4d49c62b6376de6d386146e7d5ee
+
 ## [0.0.1-alpha.4](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2025-10-16)
 
 ### 🔧 Chores
