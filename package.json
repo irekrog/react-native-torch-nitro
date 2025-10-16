@@ -1,6 +1,6 @@
 {
   "name": "react-native-torch-nitro",
-  "version": "0.0.1-alpha.3",
+  "version": "0.0.1-alpha.4",
   "description": "react-native-torch-nitro",
   "main": "lib/index",
   "module": "lib/index",
