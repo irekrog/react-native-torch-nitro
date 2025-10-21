@@ -545,9 +545,10 @@ On iOS, the library uses:
 
 - `getMaxLevel()` or `getMaxLevel(false)` - returns hardware maximum (always 10)
 - `getMaxLevel(true)` - returns current available level based on thermal state
-  - Under normal conditions: returns 10
+  - Under normal conditions: returns 10 (when `maxAvailableTorchLevel` >= 1.0)
   - Under thermal stress: may return lower values (e.g., 8, 5, 3) as iOS throttles the torch
   - This allows you to detect and respond to thermal limitations in real-time
+  - Note: iOS returns `Float.greatestFiniteMagnitude` when there are no thermal limitations, which is automatically clamped to 10
 
 **Important behavior:**
 
