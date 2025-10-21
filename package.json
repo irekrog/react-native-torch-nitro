@@ -36,7 +36,8 @@
     "typescript": "tsc",
     "specs": "typescript && nitrogen --logLevel=\"debug\"",
     "release": "release-it",
-    "release:alpha": "release-it --preRelease=alpha"
+    "release:alpha": "release-it --preRelease=alpha --npm.tag=alpha",
+    "release:beta": "release-it --preRelease=beta --npm.tag=beta"
   },
   "keywords": [
     "react-native",
