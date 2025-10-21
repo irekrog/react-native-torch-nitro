@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.1-alpha.10](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2025-10-21)
+
+### 🔧 Chores
+
+* simplify postinstall script in package.json ([26650df](https://github.com/irekrog/react-native-torch-nitro/commit/26650df4ebe1769b788d223dc087854953262aad))
+
 ## [0.0.1-alpha.9](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2025-10-21)
 
 ### 🔧 Chores
