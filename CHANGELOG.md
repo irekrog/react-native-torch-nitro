@@ -1,5 +1,7 @@
 # Changelog
 
+## [0.0.1](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.10...v0.0.1) (2025-10-21)
+
 ## [0.0.1-alpha.10](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.9...v0.0.1-alpha.10) (2025-10-21)
 
 ### 🔧 Chores
