@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.1-alpha.8](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2025-10-21)
+
+### 🔧 Chores
+
+* update release-it configuration to specify input file for changelog ([2d659ac](https://github.com/irekrog/react-native-torch-nitro/commit/2d659acbf0713a0d2c6ad45f79154340ce7ab9c1))
+
 ## [0.0.1-alpha.5](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2025-10-16)
 
 ### 🐛 Bug Fixes
