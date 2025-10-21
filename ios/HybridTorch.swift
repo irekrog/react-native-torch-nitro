@@ -61,8 +61,9 @@ class HybridTorch: HybridTorchSpec {
         print("[HybridTorch]   - Requested level param: \(level ?? -1)")
         
         // Map discrete level (1-10) to AVCaptureDevice's 0.1-maxAvailableTorchLevel range
-        // Note: maxAvailableTorchLevel can be < 1.0 under thermal duress
-        let maxAvailable = AVCaptureDevice.maxAvailableTorchLevel
+        // Note: maxAvailableTorchLevel can be < 1.0 under thermal duress,
+        // or Float.greatestFiniteMagnitude when there are no thermal limitations
+        let maxAvailable = min(AVCaptureDevice.maxAvailableTorchLevel, 1.0)
         let torchLevel = level ?? Float(currentLevel / maxTorchLevel)
         let clampedLevel = max(0.1, min(maxAvailable, torchLevel))
         
@@ -194,8 +195,13 @@ class HybridTorch: HybridTorchSpec {
     // If dynamic is true (iOS only), return current available level based on thermal state
     if dynamic == true {
       let currentMax = AVCaptureDevice.maxAvailableTorchLevel
+      
+      // maxAvailableTorchLevel returns Float.greatestFiniteMagnitude (3.4028235e+38) 
+      // when there are no thermal limitations. Clamp to 1.0 in this case.
+      let effectiveMax = min(currentMax, 1.0)
+      
       // Scale from 0.0-1.0 range to 1-10 range
-      return Double(currentMax * Float(maxTorchLevel))
+      return Double(effectiveMax * Float(maxTorchLevel))
     }
     
     // Otherwise return the hardware maximum (10 discrete levels)
