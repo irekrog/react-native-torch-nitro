@@ -5,6 +5,20 @@
 
 A high-performance React Native library for controlling the device's flashlight/torch, powered by [NitroModules](https://nitro.margelo.com/).
 
+## Demo
+
+
+
+https://github.com/user-attachments/assets/351562d6-ec79-4d46-82a9-35ebfb983840
+
+
+
+<div align="center">
+  <img src="./assets/demo.gif" alt="React Native Torch Demo" width="300" />
+</div>
+
+> **Try it yourself:** Check out the full example app in the [`example/`](./example) folder.
+
 ## Features
 
 - **Zero Bridge Overhead** - Direct native module access via NitroModules for maximum performance
