@@ -7,7 +7,7 @@ A high-performance React Native library for controlling the device's flashlight/
 
 ## Demo
 
-https://github.com/user-attachments/assets/351562d6-ec79-4d46-82a9-35ebfb983840
+https://github.com/user-attachments/assets/919be4f9-5d0b-45f0-a533-abf86ddd65f6
 
 > **Try it yourself:** Check out the full example app in the [`example/`](./example) folder.
 
