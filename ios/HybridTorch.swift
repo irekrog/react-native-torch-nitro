@@ -11,11 +11,11 @@ class HybridTorch: HybridTorchSpec {
   // iOS supports 10 discrete brightness levels (mapped to 0.1 - 1.0)
   private let maxTorchLevel: Double = 10.0
 
-  // 🔥 Callbacki do JS
+  // 🔥 Callbacks to JS
   var onStateChanged: ((Bool) -> Void)? = nil
   var onLevelChanged: ((Double?) -> Void)? = nil
 
-  // MARK: - Błędy Torch
+  // MARK: - Torch Errors
   enum TorchError: Error {
     case noDevice
     case noTorch
@@ -89,7 +89,7 @@ class HybridTorch: HybridTorchSpec {
       let wasOn = isTorchOn
       isTorchOn = enable
       
-      // Powiadamiamy JS o zmianie stanu
+      // Notify JS about state change
       if wasOn != enable {
         print("[HybridTorch] 📢 Calling onStateChanged: \(enable)")
         onStateChanged?(enable)
@@ -97,7 +97,7 @@ class HybridTorch: HybridTorchSpec {
         print("[HybridTorch] ⏭️  Skipping onStateChanged (no change: \(enable))")
       }
       
-      // Powiadamiamy JS o zmianie poziomu (tylko gdy wartość się faktycznie zmieniła)
+      // Notify JS about level change (only when value actually changed)
       // Round to avoid floating point precision issues (e.g., 6.9999998 -> 7.0)
       let newLevel: Double? = enable ? round(currentLevel) : nil
       let roundedPrevious: Double? = previousLevel != nil ? round(previousLevel!) : nil

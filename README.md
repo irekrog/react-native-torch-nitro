@@ -22,8 +22,8 @@ A high-performance React Native library for controlling the device's flashlight/
 - Android:
   - `minSdk` >= 23 (Android 6.0 Marshmallow) for basic torch functionality
   - `compileSdk` >= 34 (required by `react-native-nitro-modules`)
-  - For brightness control: API 33+ (Android 13 Tiramisu)
-- `react-native-nitro-modules` >= 0.30.1
+  - For brightness control: API 33+ (Android 13)
+- `react-native-nitro-modules` >= 0.3x.x
 
 ## Installation
 
@@ -443,7 +443,7 @@ function TorchWithTimer() {
 - Uses `CameraManager` API (API 23+)
 - **No permissions required** - `setTorchMode()` doesn't require CAMERA permission since API 23
 - Minimum API level: 23 (Android 6.0 Marshmallow)
-- **Brightness control**: Requires API 33+ (Android 13 Tiramisu)
+- **Brightness control**: Requires API 33+ (Android 13)
   - Automatically detects if device supports brightness control via `FLASH_INFO_STRENGTH_MAXIMUM_LEVEL`
   - Returns `null` from `getMaxLevel()` if not supported
   - Throws `BrightnessControlNotSupported` error when trying to set level on unsupported devices
@@ -469,7 +469,7 @@ This usually means the camera service is in use by another app or the system is 
 **For brightness control:**
 
 - Your device is running Android below 13 (API 33)
-- Brightness control requires Android 13 Tiramisu or higher
+- Brightness control requires Android 13 or higher
 - Use `getMaxLevel()` to check if brightness control is available before calling `setLevel()`
 
 ### "BrightnessControlNotSupported" Error

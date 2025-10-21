@@ -5,8 +5,8 @@ import { parseAndNormalizeError } from './utils'
 const _HybridTorch = NitroModules.createHybridObject<TorchType>('Torch')
 
 /**
- * Prywatny obiekt Nitro – nie eksportowany publicznie.
- * Używany tylko wewnątrz hooka useTorch().
+ * Private Nitro object – not exported publicly.
+ * Used only inside the useTorch() hook.
  */
 export const Torch = {
   // ASYNC METHODS
