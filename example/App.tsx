@@ -24,7 +24,7 @@ const { width } = Dimensions.get('window');
 
 function App() {
   const [isOn, setIsOn] = useState(false);
-  const [currentLevel, setCurrentLevel] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState<number | null>(null);
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const { toggle, setLevel, getMaxLevel } = useTorch({
@@ -35,7 +35,7 @@ function App() {
       console.log('Torch error:', error.code);
     },
     onLevelChanged: level => {
-      setCurrentLevel(level ?? 1);
+      setCurrentLevel(level ?? null);
     },
   });
 
@@ -74,7 +74,7 @@ function App() {
 
 interface AppContentProps {
   isOn: boolean;
-  currentLevel: number;
+  currentLevel: number | null;
   maxLevel: number;
   scaleAnim: Animated.Value;
   onToggle: () => void;
@@ -91,12 +91,28 @@ function AppContent({
 }: AppContentProps) {
   const insets = useSafeAreaInsets();
 
+  // Calculate background color based on brightness level
+  const getBackgroundColor = () => {
+    if (!isOn || currentLevel === null) {
+      return '#0f0f1e';
+    }
+
+    const intensity = currentLevel / maxLevel;
+
+    // Interpolate between dark blue and golden yellow
+    const r = Math.round(15 + (255 - 15) * intensity * 0.3);
+    const g = Math.round(15 + (215 - 15) * intensity * 0.3);
+    const b = Math.round(30 + (0 - 30) * intensity * 0.2);
+
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+
   const containerStyle = [
     styles.container,
-    isOn ? styles.containerOn : styles.containerOff,
     {
       paddingTop: insets.top,
       paddingBottom: insets.bottom,
+      backgroundColor: getBackgroundColor(),
     },
   ];
 
@@ -123,6 +139,9 @@ function AppContent({
     isOn ? styles.bulbSocketOn : styles.bulbSocketOff,
   ];
 
+  // Calculate glow opacity based on brightness level
+  const glowOpacity = currentLevel !== null ? currentLevel / maxLevel : 0;
+
   return (
     <View style={containerStyle}>
       <View style={styles.header}>
@@ -133,7 +152,16 @@ function AppContent({
       </View>
 
       <View style={styles.torchContainer}>
-        {isOn && <View style={styles.glow} />}
+        {isOn && (
+          <View
+            style={[
+              styles.glow,
+              {
+                opacity: 0.3 + glowOpacity * 0.5,
+              },
+            ]}
+          />
+        )}
 
         <Pressable onPress={onToggle}>
           <Animated.View style={torchButtonStyle}>
@@ -166,76 +194,78 @@ function AppContent({
         </Text>
       </View>
 
-      <View style={styles.controlsContainer}>
-        <View style={styles.levelInfo}>
-          <Text style={styles.levelLabel}>Brightness</Text>
-          <Text style={styles.levelValue}>
-            {currentLevel} / {maxLevel}
-          </Text>
-        </View>
+      {isOn && (
+        <View style={styles.controlsContainer}>
+          <View style={styles.levelInfo}>
+            <Text style={styles.levelLabel}>Brightness</Text>
+            <Text style={styles.levelValue}>
+              {currentLevel ?? 0} / {maxLevel}
+            </Text>
+          </View>
 
-        <View style={styles.sliderContainer}>
-          <Text style={styles.sliderLabel}>MIN</Text>
-          <Slider
-            value={currentLevel}
-            minimumValue={1}
-            maximumValue={maxLevel}
-            step={1}
-            onValueChange={value => {
-              onLevelChange(value[0]);
-            }}
-            containerStyle={styles.slider}
-            minimumTrackTintColor="#ffd700"
-            maximumTrackTintColor="#2d2d44"
-            thumbTintColor="#ffd700"
-            thumbStyle={styles.thumb}
-            trackStyle={styles.track}
-          />
-          <Text style={styles.sliderLabel}>MAX</Text>
-        </View>
+          <View style={styles.sliderContainer}>
+            <Text style={styles.sliderLabel}>MIN</Text>
+            <Slider
+              value={currentLevel ?? 1}
+              minimumValue={1}
+              maximumValue={maxLevel}
+              step={1}
+              onValueChange={value => {
+                onLevelChange(value[0]);
+              }}
+              containerStyle={styles.slider}
+              minimumTrackTintColor="#ffd700"
+              maximumTrackTintColor="#2d2d44"
+              thumbTintColor="#ffd700"
+              thumbStyle={styles.thumb}
+              trackStyle={styles.track}
+            />
+            <Text style={styles.sliderLabel}>MAX</Text>
+          </View>
 
-        <View style={styles.quickActions}>
-          <Text style={styles.quickActionsTitle}>Quick Actions</Text>
-          <View style={styles.quickButtonsRow}>
-            <Pressable
-              style={({ pressed }) => [
-                styles.quickButton,
-                pressed && styles.quickButtonPressed,
-              ]}
-              onPress={() => onLevelChange(Math.round(maxLevel * 0.25))}
-            >
-              <Text style={styles.quickButtonText}>25%</Text>
-            </Pressable>
-            <Pressable
-              style={({ pressed }) => [
-                styles.quickButton,
-                pressed && styles.quickButtonPressed,
-              ]}
-              onPress={() => onLevelChange(Math.round(maxLevel * 0.5))}
-            >
-              <Text style={styles.quickButtonText}>50%</Text>
-            </Pressable>
-            <Pressable
-              style={({ pressed }) => [
-                styles.quickButton,
-                pressed && styles.quickButtonPressed,
-              ]}
-              onPress={() => onLevelChange(Math.round(maxLevel * 0.75))}
-            >
-              <Text style={styles.quickButtonText}>75%</Text>
-            </Pressable>
-            <Pressable
-              style={({ pressed }) => [
-                styles.quickButton,
-                pressed && styles.quickButtonPressed,
-              ]}
-              onPress={() => onLevelChange(maxLevel)}
-            >
-              <Text style={styles.quickButtonText}>MAX</Text>
-            </Pressable>
+          <View style={styles.quickActions}>
+            <Text style={styles.quickActionsTitle}>Quick Actions</Text>
+            <View style={styles.quickButtonsRow}>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.quickButton,
+                  pressed && styles.quickButtonPressed,
+                ]}
+                onPress={() => onLevelChange(Math.round(maxLevel * 0.25))}
+              >
+                <Text style={styles.quickButtonText}>25%</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.quickButton,
+                  pressed && styles.quickButtonPressed,
+                ]}
+                onPress={() => onLevelChange(Math.round(maxLevel * 0.5))}
+              >
+                <Text style={styles.quickButtonText}>50%</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.quickButton,
+                  pressed && styles.quickButtonPressed,
+                ]}
+                onPress={() => onLevelChange(Math.round(maxLevel * 0.75))}
+              >
+                <Text style={styles.quickButtonText}>75%</Text>
+              </Pressable>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.quickButton,
+                  pressed && styles.quickButtonPressed,
+                ]}
+                onPress={() => onLevelChange(maxLevel)}
+              >
+                <Text style={styles.quickButtonText}>MAX</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
+      )}
     </View>
   );
 }
@@ -243,12 +273,6 @@ function AppContent({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  containerOn: {
-    backgroundColor: '#1a1a2e',
-  },
-  containerOff: {
-    backgroundColor: '#0f0f1e',
   },
   header: {
     alignItems: 'center',
