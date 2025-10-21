@@ -28,7 +28,7 @@
     "README.md"
   ],
   "scripts": {
-    "postinstall": "rm -rf node_modules/react node_modules/react-native 2>/dev/null || true; tsc || exit 0;",
+    "postinstall": "tsc || exit 0;",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf android/build node_modules/**/android/build lib",
     "lint": "eslint \"**/*.{js,ts,tsx}\" --fix",
