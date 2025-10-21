@@ -71,10 +71,6 @@
                         "section": "🔧 Chores"
                     }
                 ]
-            },
-            "infile": "CHANGELOG.md",
-            "writerOpts": {
-                "commitPartial": "* {{#if scope}}**{{scope}}:** {{/if}}{{subject}} by @{{committerName}} in {{hash}}\n"
             }
         }
     }
