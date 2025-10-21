@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.1-alpha.9](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.8...v0.0.1-alpha.9) (2025-10-21)
+
+### 🔧 Chores
+
+* update release-it configuration to include npm tags for alpha and beta releases ([b13f030](https://github.com/irekrog/react-native-torch-nitro/commit/b13f0301ad167d1133a3d98c047f4e851b4855ba))
+
 ## [0.0.1-alpha.8](https://github.com/irekrog/react-native-torch-nitro/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2025-10-21)
 
 ### 🔧 Chores
