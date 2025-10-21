@@ -3,7 +3,7 @@
  * Modern flashlight controller with smooth animations
  */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -25,7 +25,6 @@ const { width } = Dimensions.get('window');
 function App() {
   const [isOn, setIsOn] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
-  const glowAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const { toggle, setLevel, getMaxLevel } = useTorch({
@@ -36,28 +35,11 @@ function App() {
       console.log('Torch error:', error.code);
     },
     onLevelChanged: level => {
-      setCurrentLevel(level || 0);
+      setCurrentLevel(level ?? 1);
     },
   });
 
   const maxLevel = getMaxLevel() || 10;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(glowAnim, {
-          toValue: 1,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(glowAnim, {
-          toValue: 0,
-          duration: 2000,
-          useNativeDriver: true,
-        }),
-      ]),
-    ).start();
-  }, [glowAnim]);
 
   const handleToggle = () => {
     Animated.sequence([
@@ -75,11 +57,6 @@ function App() {
     toggle();
   };
 
-  const glowOpacity = glowAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.3, 0.7],
-  });
-
   return (
     <SafeAreaProvider>
       <StatusBar barStyle="light-content" />
@@ -87,7 +64,6 @@ function App() {
         isOn={isOn}
         currentLevel={currentLevel}
         maxLevel={maxLevel}
-        glowOpacity={glowOpacity}
         scaleAnim={scaleAnim}
         onToggle={handleToggle}
         onLevelChange={setLevel}
@@ -100,7 +76,6 @@ interface AppContentProps {
   isOn: boolean;
   currentLevel: number;
   maxLevel: number;
-  glowOpacity: Animated.AnimatedInterpolation<number>;
   scaleAnim: Animated.Value;
   onToggle: () => void;
   onLevelChange: (level: number) => void;
@@ -110,7 +85,6 @@ function AppContent({
   isOn,
   currentLevel,
   maxLevel,
-  glowOpacity,
   scaleAnim,
   onToggle,
   onLevelChange,
@@ -159,24 +133,7 @@ function AppContent({
       </View>
 
       <View style={styles.torchContainer}>
-        {isOn && (
-          <Animated.View
-            style={[
-              styles.glow,
-              {
-                opacity: glowOpacity,
-                transform: [
-                  {
-                    scale: glowOpacity.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.2],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-        )}
+        {isOn && <View style={styles.glow} />}
 
         <Pressable onPress={onToggle}>
           <Animated.View style={torchButtonStyle}>
@@ -221,7 +178,7 @@ function AppContent({
           <Text style={styles.sliderLabel}>MIN</Text>
           <Slider
             value={currentLevel}
-            minimumValue={0}
+            minimumValue={1}
             maximumValue={maxLevel}
             step={1}
             onValueChange={value => {
