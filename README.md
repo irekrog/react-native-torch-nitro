@@ -826,11 +826,22 @@ cd ios && pod install
 
 ## Example App
 
-To run the example app:
+This repository includes a complete example app demonstrating all features of `react-native-torch-nitro`.
+
+**Location:** The example app is located in the `example/` directory within this repository.
+
+### Running the Example
 
 ```sh
-# Install dependencies
-cd NitroTorchExampleApp
+# Clone the repository
+git clone https://github.com/irekrog/react-native-torch-nitro.git
+cd react-native-torch-nitro
+
+# Install library dependencies
+npm install
+
+# Navigate to example app
+cd example
 npm install
 
 # iOS
@@ -840,6 +851,15 @@ npm run ios
 # Android
 npm run android
 ```
+
+The example app demonstrates:
+
+- Basic torch on/off control
+- Toggle functionality
+- Brightness control with slider (iOS and Android 13+)
+- Real-time state and level tracking
+- Error handling for unsupported features
+- Modern UI with visual feedback
 
 ## Contributing
 
